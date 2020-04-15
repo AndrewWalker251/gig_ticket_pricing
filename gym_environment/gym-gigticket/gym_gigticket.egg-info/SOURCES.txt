@@ -1,6 +1,12 @@
 setup.py
+gym_gigticket/__init__.py
 gym_gigticket.egg-info/PKG-INFO
 gym_gigticket.egg-info/SOURCES.txt
 gym_gigticket.egg-info/dependency_links.txt
 gym_gigticket.egg-info/requires.txt
 gym_gigticket.egg-info/top_level.txt
+gym_gigticket/__pycache__/__init__.cpython-36.pyc
+gym_gigticket/envs/__init__.py
+gym_gigticket/envs/gigticket_env.py
+gym_gigticket/envs/__pycache__/__init__.cpython-36.pyc
+gym_gigticket/envs/__pycache__/gigticket_env.cpython-36.pyc
