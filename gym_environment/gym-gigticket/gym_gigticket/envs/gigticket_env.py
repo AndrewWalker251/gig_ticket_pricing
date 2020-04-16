@@ -4,7 +4,7 @@ Created on Mon Apr 13 11:59:30 2020
 
 @author: AWalker8
 """
-
+import numpy as np
 import gym
 from gym import error, spaces, utils
 from gym.utils import seeding
@@ -34,10 +34,31 @@ class gigticketEnv(gym.Env):
         For now simple version that has one starting price £50 one capacity 1000,
         one lead time 5 days and initial reward 0. 
         '''
+        
+        self.action_space = gym.spaces.Discrete(3)
+        
+        '''
+        the available pricing actions are
+        1 = -10
+        2 = 0
+        3 = +10
+        '''
+        #observation_high = np.array([100,1000,20])
+        #observation_low = np.array([20,0,0])
+        
+        self.observation_space = spaces.Tuple((
+        spaces.Discrete(9),
+        spaces.Discrete(200),
+        spaces.Discrete(20)))
+        
+        
+        #self.observation_space = spaces.Discrete(observation_low, observation_high,dtype=np.float32, shape=(9,1000,20))
+        
+        
         #Price
         pr = 50
         # tickets left
-        tl = 1000
+        tl = 200
         # reward
         rd = 0
         # days till gig
@@ -65,14 +86,20 @@ class gigticketEnv(gym.Env):
         update the environment based on the action taken
         In this version only options are to increase price by +10, 0, or - 10,
         once a week. 
+    
         '''
-        #Change the price to reflect the action taken.
+        action_options = [-10,0,10]
+        actual_action = action_options[action]
+
+    #Change the price to reflect the action taken.
         # Put limits on the price. 
         # Can't have price less than 15.
-        if self.state[0] + action > 15: 
-            self.state[0] =  self.state[0] + action
+        if ((self.state[0] + actual_action )>= 20 ) and ((self.state[0] + actual_action) <= 100 ): 
+            self.state[0] =  self.state[0] + actual_action
+        elif (self.state[0] + actual_action < 20 ) :
+            self.state[0] = 20
         else:
-            self.state[0] = 15
+            self.state[0] = 100
         
         # Use new price to simulate how many tickets are sold. Create function to imitate demand. 
         # This function needs to be replaced with the most accurate representation of reality.
@@ -109,7 +136,7 @@ class gigticketEnv(gym.Env):
       
     def reset(self):
         pr = 50
-        tl = 1000
+        tl = 200
         ds = 20
                   
         self.state = [pr,tl,ds]
