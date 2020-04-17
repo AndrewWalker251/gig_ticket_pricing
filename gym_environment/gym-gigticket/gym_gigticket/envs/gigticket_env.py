@@ -59,8 +59,6 @@ class gigticketEnv(gym.Env):
         pr = 50
         # tickets left
         tl = 200
-        # reward
-        rd = 0
         # days till gig
         ds = 20
           
@@ -130,7 +128,6 @@ class gigticketEnv(gym.Env):
         self.history['reward'].append(self.reward)
         self.history['days_remaining'].append(self.state[2])
         
-        self.history
         
         return [self.state, self.reward, self.done, self.history]
       
